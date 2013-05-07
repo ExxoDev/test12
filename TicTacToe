@@ -1,7 +1,5 @@
 package Gruppe5;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,7 +9,7 @@ import java.util.Properties;
 
 public class Settings {
 
-  /**
+	/**
 	 * @param args
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
@@ -33,8 +31,8 @@ public class Settings {
 
 	public static void ControllFile() throws FileNotFoundException, IOException{
 		// Wird überprüft, ob datei existiert
-		File lagerDatei = new File("Settings.config");
-		if(!lagerDatei.exists()){
+		File Setting = new File("Settings.config");
+		if(!Setting.exists()){
 			file = true;
 			Save();
 		} else{
@@ -45,10 +43,10 @@ public class Settings {
 
 	public static void Save() throws FileNotFoundException, IOException{
 
-		// Neue Einstellung
+		// New Settings
 		Properties props = new Properties();
 
-		// Werte werden gesetzt
+		// Values are set
 		props.setProperty("Gamename", Gamename);
 		props.setProperty("GameID", SaveGameID);
 		props.setProperty("wins", SaveWins);
@@ -75,7 +73,6 @@ public class Settings {
 	public static float Average(){
 		try {
 			average_win_lose = ((LoadedWins+NewWins) / (LoadedWins+NewWins+LoadedLoses+NewLoses)) * 100;
-			int s;
 			}
 		catch (Exception e) {
 			System.out.println("Error at calculating Average Win/Lose");
@@ -83,6 +80,3 @@ public class Settings {
 		return average_win_lose;
 	}
 }
-
-
-
