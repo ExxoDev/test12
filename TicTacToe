@@ -52,8 +52,8 @@ public class Settings {
 		props.setProperty("wins", SaveWins);
 		props.setProperty("loses", SaveLoses);
 
-		// Werte werden gespeichert
-		props.store(new FileOutputStream(new File("Config")), "Spieleinstellungen");
+		// Setting is going to be saved
+		props.store(new FileOutputStream(new File("Config")), "Gamesettings");
 	}
 
 	public static void Load() throws FileNotFoundException, IOException{
