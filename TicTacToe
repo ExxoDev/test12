@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.Properties;
 
 public class Settings {
@@ -15,20 +16,40 @@ public class Settings {
 	 * @throws FileNotFoundException 
 	 */
 
+	static String Player1 = "Player1";
+	static String Player2 = "Player2";
+	public static String percent_average_win_lose;
+	public static String P2_percent_average_win_lose;
+	
 	static String Gamename = "Tic Tac Toe";
 	static int GameID = 0;
-	static int LoadedWins = 0;
-	static int NewWins = 2;
-	static int LoadedLoses = 0;
-	static int NewLoses = 0;
+	public static double LoadedWins = 1.0;
+	public static double NewWins = 2.0;
+	public static double LoadedLoses = 0.0;
+	public static double NewLoses = 1.0;
 	static boolean file;
-
-	static float average_win_lose;
 	
-	static String SaveGameID = String.valueOf(GameID);
-	static String SaveWins = String.valueOf(LoadedWins+NewWins);
-	static String SaveLoses = String.valueOf(LoadedLoses+NewLoses);
+	public static double P2_LoadedWins = 1.0;
+	public static double P2_NewWins = 2.0;
+	public static double P2_LoadedLoses = 0.0;
+	public static double P2_NewLoses = 1.0;
+	
+	public static double AllWins = NewWins + LoadedWins; 
+	public static double AllLoses = NewLoses + LoadedLoses;
+	
+	public static double P2_AllWins = NewWins + LoadedWins; 
+	public static double P2_AllLoses = NewLoses + LoadedLoses;
 
+	public static double average_win_lose;
+	public static double P2_average_win_lose;
+	
+	public static String SaveGameID = String.valueOf(GameID);
+	public static String SaveWins = String.valueOf(LoadedWins+NewWins);
+	public static String SaveLoses = String.valueOf(LoadedLoses+NewLoses);
+
+	public static String P2_SaveWins = String.valueOf(LoadedWins+NewWins);
+	public static String P2_SaveLoses = String.valueOf(LoadedLoses+NewLoses);
+	
 	public static void ControllFile() throws FileNotFoundException, IOException{
 		// Wird überprüft, ob datei existiert
 		File Setting = new File("Settings.config");
@@ -48,9 +69,13 @@ public class Settings {
 
 		// Values are set
 		props.setProperty("Gamename", Gamename);
+		props.setProperty("Player1", Player1);
+		props.setProperty("Player2", Player2);
 		props.setProperty("GameID", SaveGameID);
-		props.setProperty("wins", SaveWins);
-		props.setProperty("loses", SaveLoses);
+		props.setProperty("Wins", SaveWins);
+		props.setProperty("Loses", SaveLoses);
+		props.setProperty("P2_Wins", P2_SaveWins);
+		props.setProperty("P2_Loses", P2_SaveLoses);
 
 		// Setting is going to be saved
 		props.store(new FileOutputStream(new File("Config")), "Gamesettings");
@@ -65,18 +90,42 @@ public class Settings {
 
 		// Load saved Settings
 		Gamename = props.getProperty("Gamename");
+		Player1 = props.getProperty("Player1");
+		Player2 = props.getProperty("Player2");
 		GameID = Integer.parseInt(props.getProperty("GameID"));
-		LoadedWins = Integer.parseInt(props.getProperty("wins"));
-		LoadedLoses = Integer.parseInt(props.getProperty("loses"));
+		LoadedWins = Float.parseFloat(props.getProperty("Wins"));
+		LoadedLoses = Float.parseFloat(props.getProperty("Loses"));
+		
+		P2_LoadedWins = Float.parseFloat(props.getProperty("P2_Wins"));
+		P2_LoadedLoses = Float.parseFloat(props.getProperty("P2_Loses"));
+		
+		AllWins = NewWins + LoadedWins; 
+		AllLoses = NewLoses + LoadedLoses;
+		
+		P2_AllWins = P2_NewWins + P2_LoadedWins; 
+		P2_AllLoses = P2_NewLoses + P2_LoadedLoses;
+
 	}
 
-	public static float Average(){
+	public static double Average(){
 		try {
-			average_win_lose = ((LoadedWins+NewWins) / (LoadedWins+NewWins+LoadedLoses+NewLoses)) * 100;
+			average_win_lose = (AllLoses / (AllWins + AllLoses));
+			P2_average_win_lose = (P2_AllLoses / (P2_AllWins + P2_AllLoses));
 			}
 		catch (Exception e) {
 			System.out.println("Error at calculating Average Win/Lose");
 		}
+		percent_average_win_lose = NumberFormat.getPercentInstance().format( average_win_lose );
+		P2_percent_average_win_lose = NumberFormat.getPercentInstance().format( P2_average_win_lose );
 		return average_win_lose;
+	}
+	
+	public String ChangePlayerName(String NewPlayer, int playerID){
+		if(playerID == 1){
+		Player1 = NewPlayer;
+		return NewPlayer; } else {
+		Player2 = NewPlayer;
+		return NewPlayer;
+		}
 	}
 }
