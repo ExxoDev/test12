@@ -16,8 +16,14 @@ public class Settings {
 	 * @throws FileNotFoundException 
 	 */
 
+	public static void main(String[] args) throws FileNotFoundException, IOException{
+		ControllFile();
+		Load();
+		Average();
+	}
 	static String Player1 = "Player1";
 	static String Player2 = "Player2";
+	
 	public static String percent_average_win_lose;
 	public static String P2_percent_average_win_lose;
 	
