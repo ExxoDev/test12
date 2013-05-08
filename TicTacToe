@@ -10,6 +10,23 @@ import java.util.Properties;
 
 public class Settings {
 
+	public Settings() throws FileNotFoundException, IOException{
+		ControllFile();
+		Load();
+		Average();
+	}
+	
+	/**
+	 * Functions : 
+	 *  ~ ControllFile(); - Wenn die Config nicht vorhanden ist, wird sie gespeichert
+	 *  ~ Save(); - Config wird neu überschrieben und mit den geladenen/geänderten Variabeln gespeichert
+	 *  ~ Load(); - Config wird geladen
+	 *  ~ Average();  - Die Durschnittsgewinnchance pro Spiel wird berechnet 
+	 *     percent_average_win_lose - Chance in % für Spieler1
+	 *     P2_percent_average_win_lose - Chance in % für Spieler2
+	 *  ~ ChangePlayerName("NeuerName" , 1)  Spielername ändern 1 = Spieler 1 wird geändert ; 2 = Spieler 2 wird geändert
+	 */
+	
 	/**
 	 * @param args
 	 * @throws IOException 
@@ -17,10 +34,8 @@ public class Settings {
 	 */
 
 	public static void main(String[] args) throws FileNotFoundException, IOException{
-		ControllFile();
-		Load();
-		Average();
 	}
+	
 	static String Player1 = "Player1";
 	static String Player2 = "Player2";
 	
@@ -58,7 +73,7 @@ public class Settings {
 	
 	public static void ControllFile() throws FileNotFoundException, IOException{
 		// Wird überprüft, ob datei existiert
-		File Setting = new File("Settings.config");
+		File Setting = new File("Config");
 		if(!Setting.exists()){
 			file = true;
 			Save();
